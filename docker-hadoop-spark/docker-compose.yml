@@ -1,7 +1,7 @@
 version: '2' 
 services:
   namenode:
-    image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     container_name: namenode
     volumes:
       - ./data/namenode:/hadoop/dfs/name
@@ -11,8 +11,8 @@ services:
       - ./hadoop.env
     ports:
       - 50070:50070
-  datanode:
-    image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+  datanode1:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     depends_on: 
       - namenode
     volumes:
@@ -21,8 +21,29 @@ services:
       - ./hadoop.env
     ports:
       - 50075:50075
+  datanode2:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    depends_on: 
+      - namenode
+    volumes:
+      - ./data/datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 50076:50076
+  datanode3:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    depends_on: 
+      - namenode
+    volumes:
+      - ./data/datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 50077:50077
+  
   spark-master:
-    image: bde2020/spark-master:2.1.0-hadoop2.8-hive-java8
+    image: bde2020/spark-master:3.0.0-hadoop3.2
     container_name: spark-master
     ports:
       - 8080:8080
@@ -30,7 +51,7 @@ services:
     env_file:
       - ./hadoop.env
   spark-worker:
-    image: bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8
+    image: bde2020/spark-worker:3.0.0-hadoop3.2
     depends_on:
       - spark-master
     environment:
@@ -52,3 +73,34 @@ services:
       - 8088:8088
     environment:
       - NAMENODE_HOST=namenode
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    container_name: elasticsearch
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+
+volumes:
+  esdata:
+  hadoop_namenode:
+  hadoop_datanode1:
+  hadoop_datanode2:
+  hadoop_datanode3:
+
+networks:
+  es-net:
+    driver: bridge
