@@ -36,6 +36,17 @@ services:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop.env
+  
+  datanode3:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode3
+    restart: always
+    volumes:
+      - hadoop_datanode3:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
 
   spark-master:
     image: bde2020/spark-master:3.0.0-hadoop3.2
@@ -44,6 +55,7 @@ services:
       - namenode
       - datanode1 
       - datanode2
+      - datanode3
     ports:
       - "8080:8080"
       - "7077:7077"
@@ -88,6 +100,8 @@ volumes:
   hadoop_namenode:
   hadoop_datanode1:
   hadoop_datanode2:
+  hadoop_datanode3:
+
 
 networks:
   es-net:
