@@ -1,0 +1,12 @@
+docker-compose up -d
+docker cp src spark-master:src
+docker cp elasticsearch-hadoop-7.15.1.jar spark-master:elasticsearch-hadoop-7.15.1.jar
+docker cp src/movies.csv namenode:/
+docker cp src/ratings.csv namenode:/
+docker exec -it namenode /bin/bash
+hdfs dfs -mkdir /data/
+hdfs dfs -put movies.csv /data/
+hdfs dfs -put ratings.csv /data/
+docker exec -it spark-master /bin/bash
+spark/bin/spark-submit --master spark://spark-master:7077 --jars elasticsearch-hadoop-7.15.1.jar --driver-class-path elasticsearch-hadoop-7.15.1.jar src/als_recommendation_system.py
+
