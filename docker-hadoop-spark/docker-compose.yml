@@ -81,6 +81,10 @@ services:
   #     - ./hadoop.env
   #   ports:
   #     - 9001:9001
+  #   depends_on:
+  #     - spark-master
+  #     - namenode
+      
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
     container_name: elasticsearch
