@@ -6,11 +6,13 @@ from pyspark.sql.functions import *
 from pyspark.sql.types import *
 from pyspark import SparkConf, SparkContext
 from pyspark.ml.evaluation import RegressionEvaluator
-from pyspark.ml.recommendation import ALS
-from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
+from pyspark.ml.recommendation import ALS, ALSModel
+from pyspark.ml.tuning import ParamGridBuilder, CrossValidator, CrossValidatorModel
 from operator import add
-import sys,os
+#import sys,os
 import config
+#import tempfile
+import json
 
 if __name__ == "__main__":
     APP_NAME="PreprocessData"
@@ -21,9 +23,9 @@ if __name__ == "__main__":
                                elasticsearch_nodes_wan_only="true",
                                hdfs_namenode="hdfs://namenode:9000"
                                )
-    print("init spark session")
+    # print("init spark session")
     spark = app_config.initialize_spark_session(APP_NAME)
-    print("read file csv")
+    # print("read file csv")
 
     sc = SparkContext
     # sc.setCheckpointDir('checkpoint')
@@ -72,6 +74,79 @@ if __name__ == "__main__":
     als = ALS(userCol="userId", itemCol="movieId", ratingCol="rating", nonnegative = True, implicitPrefs = False, coldStartStrategy="drop")
 
     # Confirm that a model called "als" was created
-    type(als)
+    print(type(als))
+
+    # Add hyperparameters and their respective values to param_grid
+    # param_grid = ParamGridBuilder() \
+    #             .addGrid(als.rank, [10, 50, 100, 150]) \
+    #             .addGrid(als.regParam, [.01, .05, .1, .15]) \
+    #             .build()
+                #             .addGrid(als.maxIter, [5, 50, 100, 200]) \
+
+    param_grid = ParamGridBuilder() \
+                .addGrid(als.rank, [10]) \
+                .addGrid(als.regParam, [.01]) \
+                .build()
+                #             .addGrid(als.maxIter, [5, 50, 100, 200]) \
+
+            
+    # Define evaluator as RMSE and print length of evaluator
+    evaluator = RegressionEvaluator(metricName="rmse", labelCol="rating", predictionCol="prediction") 
+    print ("Num models to be tested: ", len(param_grid))
+
+
+
+    # Build cross validation using CrossValidator
+    cv = CrossValidator(estimator=als, estimatorParamMaps=param_grid, evaluator=evaluator, numFolds=5)
+
+    # Confirm cv was built
+    print(cv)
+
+    #Fit cross validator to the 'train' dataset
+    model = cv.fit(train)
+
+    # Save model
+    # print(model.getNumFolds())
+    # print(model.avgMetrics[0])
+    # path = tempfile.mkdtemp()
+    # print(path)
+    # model_path = path + "/model"
+    # model.write().save(model_path)
+    
+    # model.write().overwrite().save('/model/')
+    # cvModelRead = CrossValidatorModel.read().load('/model/')
+
+    #Extract best model from the cv model above
+    best_model = model.bestModel
+    best_model.save('hdfs://namenode:9000/data/ALSmodel')
+    best_model = ALSModel.load('hdfs://namenode:9000/data/ALSmodel')
+
+    # Print best_model
+    print(type(best_model))
+
+    txt_content = dict()
+    # Complete the code below to extract the ALS model parameters
+    print("**Best Model**")
+
+    # # Print "Rank"
+    print("  Rank:", best_model._java_obj.parent().getRank())
+    txt_content['rank'] = best_model._java_obj.parent().getRank()
+
+    # Print "MaxIter"
+    print("  MaxIter:", best_model._java_obj.parent().getMaxIter())
+    txt_content['maxiter'] = best_model._java_obj.parent().getMaxIter()
+
+    # Print "RegParam"
+    print("  RegParam:", best_model._java_obj.parent().getRegParam())
+    txt_content['regparam'] = best_model._java_obj.parent().getRegParam()
+
+    json_object = json.dumps(txt_content, indent=4)
+    with open("/result/model.json", "w") as outfile:
+        outfile.write(json_object)
+
+
+
+
+
 
 
