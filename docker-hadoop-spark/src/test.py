@@ -16,4 +16,4 @@ result = np.sqrt(np_array)
 # Convert the result back to a PySpark RDD
 result_rdd = sc.parallelize(result)
 
-print(result_rdd.collect())
+

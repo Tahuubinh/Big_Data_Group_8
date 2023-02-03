@@ -12,14 +12,6 @@ from pyspark.sql.types import *
 import config
 
 
-# schema = StructType([
-#       StructField("name",StringType(),True),
-#       StructField("Mô tả công việc",StringType(),True),
-#       StructField("Yêu cầu ứng viên",StringType(),True),
-#       StructField("Quyền lợi",StringType(),True),
-#       StructField("Cách thức ứng tuyển",StringType(),True)
-#   ])
-
 if __name__ == "__main__":
     
     APP_NAME="PreprocessData"
@@ -39,11 +31,19 @@ if __name__ == "__main__":
     print("------------------------------------------------------------------------------------------------------")
     # sc = spark.sparkContext
     # sc.addPyFile(os.path.dirname(__file__)+"/patterns.py")
-    df = spark.read.csv("hdfs://namenode:9000/data/anime.csv")
-    print("read done!")
+    df_user = spark.read.csv("hdfs://namenode:9000/data/users/user.csv")
+    print("read user done!")
     print("------------------------------------------------------------------------------------------------------")
-    df.printSchema()
+    df_user_0 = spark.read.csv("hdfs://namenode:9000/data/users/0.csv")
     
+    def count_episode_watched():
+        sql = spark.sql("Select u.username, count(u_0.watched_episodes) as total_episode_watched\
+                         From user u, 0 u_0\
+                         Where u.user_id = 0")
+        
+        sql.show()
+    
+    count_episode_watched()
     # raw_recruit_df = spark.read.schema(schema).option("multiline","true").json("hdfs://namenode:9000/data/rawdata/*.json")
     # # raw_recruit_df.show(5)
     # extracted_recruit_df=raw_recruit_df.select(raw_recruit_df["name"].alias("CompanyName"),
