@@ -24,6 +24,8 @@ if __name__ == "__main__":
     
     APP_NAME="PreprocessData"
     print("start")
+    print("------------------------------------------------------------------------------------------------------")
+
     app_config = config.Config(elasticsearch_host="elasticsearch",
                                elasticsearch_port="9200",
                                elasticsearch_input_json="yes",
@@ -31,13 +33,16 @@ if __name__ == "__main__":
                                hdfs_namenode="hdfs://namenode:9000"
                                )
     print("init spark session")
+    print("------------------------------------------------------------------------------------------------------")
     spark = app_config.initialize_spark_session(APP_NAME)
     print("read file csv")
-    df = spark.read.csv("hdfs://namenode:9000/data/anime.csv")
-    print("read done!")
-    df.printSchema()
+    print("------------------------------------------------------------------------------------------------------")
     # sc = spark.sparkContext
     # sc.addPyFile(os.path.dirname(__file__)+"/patterns.py")
+    df = spark.read.csv("hdfs://namenode:9000/data/anime.csv")
+    print("read done!")
+    print("------------------------------------------------------------------------------------------------------")
+    df.printSchema()
     
     # raw_recruit_df = spark.read.schema(schema).option("multiline","true").json("hdfs://namenode:9000/data/rawdata/*.json")
     # # raw_recruit_df.show(5)
