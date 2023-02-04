@@ -25,3 +25,13 @@ apk update
 apk add make automake gcc g++ subversion python3-dev
 pip3 install numpy venv-pack
 
+docker-compose up -d
+docker cp src spark-master:/
+docker cp elasticsearch-hadoop-7.15.1.jar spark-master:elasticsearch-hadoop-7.15.1.jar
+docker cp ../data/short_anime_ratings.csv namenode:/
+
+docker exec -it namenode /bin/bash
+hdfs dfs -mkdir /data/
+hdfs dfs -put short_anime_ratings.csv /data/
+exit
+
