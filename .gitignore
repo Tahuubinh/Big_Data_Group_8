@@ -1,4 +1,4 @@
 bigdata*
-./data/*.csv
-./data/*.zip
-data
+data/*.csv
+data/*.zip
+
