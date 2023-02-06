@@ -22,7 +22,7 @@ source pyspark_venv/bin/activate
 apk update
 apk add make automake gcc g++ subversion python3-dev
 pip3 install numpy venv-pack
-spark/bin/spark-submit --master spark://spark-master:7077 --jars elasticsearch-hadoop-7.15.1.jar --driver-class-path elasticsearch-hadoop-7.15.1.jar src/read_file.py
+spark/bin/spark-submit --master spark://spark-master:7077 --jars elasticsearch-hadoop-7.15.1.jar --driver-class-path elasticsearch-hadoop-7.15.1.jar src/als_anime.py
 odes
 sudo docker cp spark-master:/result/spark_nodes ../result2
 
