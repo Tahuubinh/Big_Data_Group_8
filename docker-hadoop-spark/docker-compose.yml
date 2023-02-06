@@ -62,6 +62,12 @@ services:
     environment:
       - INIT_DAEMON_STEP=setup_spark
       - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+    command: >
+      sh -c "python3 -m venv pyspark_venv &&
+             source pyspark_venv/bin/activate &&
+             apk update &&
+             apk add make automake gcc g++ subversion python3-dev &&
+             pip3 install numpy venv-pack"
 
   spark-worker:
     image: bde2020/spark-worker:3.0.0-hadoop3.2
