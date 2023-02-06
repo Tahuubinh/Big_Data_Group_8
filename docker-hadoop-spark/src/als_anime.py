@@ -166,7 +166,7 @@ if __name__ == "__main__":
     # spark.read.json(sc.parallelize([txt_content])).coalesce(1).write.mode('append').json('/result/model_{rank}_{regparam}.json')
     txt_content['time'] = time.time() - startime
     # with open(f"/result/model_{rank}_{regparam}.json", "w") as outfile:
-    with open(f"/result/spark_nodes/model_1_worker.json", "w") as outfile:
+    with open(f"/result/spark_nodes/model_5_core.json", "w") as outfile:
         json.dump(txt_content, outfile)
     # df = spark.createDataFrame(data=txt_content, schema = ["name","properties"])
     model.write().overwrite().save(f'/model/model_{rank}_{regparam}')

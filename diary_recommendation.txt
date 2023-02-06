@@ -16,16 +16,15 @@ exit
 
 docker exec -it spark-master /bin/bash
 mkdir -p /result/model
+mkdir -p result/spark_nodes/
 python3 -m venv pyspark_venv
 source pyspark_venv/bin/activate
 apk update
 apk add make automake gcc g++ subversion python3-dev
 pip3 install numpy venv-pack
 spark/bin/spark-submit --master spark://spark-master:7077 --jars elasticsearch-hadoop-7.15.1.jar --driver-class-path elasticsearch-hadoop-7.15.1.jar src/read_file.py
-
-sudo docker cp spark-master:/read_file ../result2/
-sudo docker cp spark-master:/result ../
-
+odes
+sudo docker cp spark-master:/result/spark_nodes ../result2
 
 docker-compose up -d
 docker cp src spark-master:/
