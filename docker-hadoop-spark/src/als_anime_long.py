@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # sc.setCheckpointDir('checkpoint')
     # spark = SparkSession.builder.appName('Recommendations').getOrCreate()
 
-    ratings = spark.read.csv("hdfs://namenode:9000/data/rating_complete.csv",header=True)
+    ratings = spark.read.csv("hdfs://namenode:9000/data/long_anime_ratings.csv",header=True)
 
     # ratings.show()
     # ratings.printSchema()

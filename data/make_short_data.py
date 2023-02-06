@@ -1,18 +1,5 @@
-#importing the module 
-import logging 
+import pandas as pd
 
-#now we will Create and configure logger 
-logging.basicConfig(filename="std.log", 
-					format='%(asctime)s %(message)s', 
-					filemode='w') 
-
-#Let us Create an object 
-logger=logging.getLogger() 
-
-#Now we are going to Set the threshold of logger to DEBUG 
-logger.setLevel(logging.DEBUG) 
-
-#some messages to test
-logger.debug("This is just a harmless debug message") 
-logger.debug("This is just a harmless rewr message") 
-logger.debug("This is just a harmless dsfsd message") 
+df = pd.read_csv('data/rating_complete.csv')
+df = df.head(300000)
+df.to_csv('data/recommendation_data.csv', index = False)
