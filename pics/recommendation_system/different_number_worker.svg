@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2023-02-06T15:09:31.512182</dc:date>
+    <dc:date>2023-02-07T01:26:37.146755</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.6.3, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.5.3, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -66,7 +66,7 @@ z
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
     <!-- 1 worker -->
-    <g transform="translate(241.799849 44.642211) scale(0.1 -0.1)">
+    <g transform="translate(241.799849 44.642211)scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-31" d="M 794 531 
 L 1825 531 
@@ -189,7 +189,7 @@ z
    </g>
    <g id="text_2">
     <!-- 137.78 (s) -->
-    <g transform="translate(187.184384 91.877286) scale(0.1 -0.1)">
+    <g transform="translate(187.184384 91.877286)scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-33" d="M 2597 2516 
 Q 3050 2419 3304 2112 
@@ -351,7 +351,7 @@ z
    </g>
    <g id="text_3">
     <!-- 2 workers -->
-    <g transform="translate(7.2 144.345927) scale(0.1 -0.1)">
+    <g transform="translate(7.2 144.345927)scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-32" d="M 1228 531 
 L 3431 531 
@@ -391,7 +391,7 @@ z
    </g>
    <g id="text_4">
     <!-- 144.21 (s) -->
-    <g transform="translate(85.866284 146.261131) scale(0.1 -0.1)">
+    <g transform="translate(85.866284 146.261131)scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-34" d="M 2419 4116 
 L 825 1625 
@@ -427,7 +427,7 @@ z
    </g>
    <g id="text_5">
     <!-- 3 workers -->
-    <g transform="translate(238.171843 254.620416) scale(0.1 -0.1)">
+    <g transform="translate(238.171843 254.620416)scale(0.1 -0.1)">
      <use xlink:href="#DejaVuSans-33"/>
      <use xlink:href="#DejaVuSans-20" x="63.623047"/>
      <use xlink:href="#DejaVuSans-77" x="95.410156"/>
@@ -441,7 +441,7 @@ z
    </g>
    <g id="text_6">
     <!-- 142.44 (s) -->
-    <g transform="translate(185.205472 206.410852) scale(0.1 -0.1)">
+    <g transform="translate(185.205472 206.410852)scale(0.1 -0.1)">
      <use xlink:href="#DejaVuSans-31"/>
      <use xlink:href="#DejaVuSans-34" x="63.623047"/>
      <use xlink:href="#DejaVuSans-32" x="127.246094"/>
