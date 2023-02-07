@@ -17,6 +17,7 @@ exit
 docker exec -it spark-master /bin/bash
 mkdir -p /result/model
 mkdir -p result/spark_nodes/
+mkdir -p result/read_file/
 python3 -m venv pyspark_venv
 source pyspark_venv/bin/activate
 apk update
