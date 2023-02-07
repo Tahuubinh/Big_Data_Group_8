@@ -17,7 +17,7 @@ Class: Talented in Computer Science - K64
 + Hà Đức Tuấn
 
 ## Data Preparation
-
+Our data is crawled from [MyAnimeList](https://myanimelist.net/) and [Kaggle](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020?select=rating_complete.csv&fbclid=IwAR37KBNhDMUmDlL2he0iLylicmXE4KjugeiNUarZjhUH-oqHNOtHkYVjvQ4)
 ## Flow
 
 ## Start the system
